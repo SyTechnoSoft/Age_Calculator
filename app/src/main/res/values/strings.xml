@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Age Calculator</string>
+    <string name="age">Age</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="today_s_date">Today\'s Date</string>
+    <string name="calculate">CALCULATE</string>
+    <string name="clear">CLEAR</string>
+    <string name="total_summary">Total Summary</string>
+    <string name="feedback">Feedback</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="share">Share</string>
+    <string name="more_apps">More Apps</string>
+    <string name="language">Change app language</string>
+    <string name="total_summary_name">Years\nMonths\nWeeks\nDays\nHours\nMinutes\nSeconds</string>
+    <string name="year">Years</string>
+    <string name="month">Months</string>
+    <string name="day">Days</string>
+    <string name="choose_language">Choose Language</string>
+
+</resources>

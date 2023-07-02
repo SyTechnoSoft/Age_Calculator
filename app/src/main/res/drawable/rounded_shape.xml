@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke
+        android:width="3dp"
+        android:color="#800080" />
+    <!-- fill/color -->
+    <solid android:color="#00FFFFFF" />
+
+    <!-- Control the width and height of the shape -->
+    <size
+        android:width="200dp"
+        android:height="70dp" />
+
+    <!-- Control the radius of each corners -->
+    <corners
+        android:bottomLeftRadius="25dp"
+        android:bottomRightRadius="25dp"
+        android:topLeftRadius="0dp"
+        android:topRightRadius="0dp" />
+</shape>

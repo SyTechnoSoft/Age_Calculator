@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Age Calculator</string>
+    <string name="age">उम्र</string>
+    <string name="birth_date">जन्म तिथि</string>
+    <string name="today_s_date">आज की तारीख</string>
+    <string name="calculate">गणना</string>
+    <string name="clear">साफ़</string>
+    <string name="total_summary">कुल सारांश</string>
+    <string name="feedback">फ़ीडबैक</string>
+    <string name="rate_us">हमें रेटिंग दें</string>
+    <string name="share">साझा करें</string>
+    <string name="more_apps">और ऐप</string>
+    <string name="language">ऐप की भाषा बदलें</string>
+    <string name="total_summary_name">वर्ष\nमहीने\nसप्ताह\nदिन\nघंटे\nमिनट\nसेकंड</string>
+    <string name="year">वर्ष</string>
+    <string name="month">महीने</string>
+    <string name="day">दिन</string>
+    <string name="choose_language">भाषा चुनें</string>
+</resources>
