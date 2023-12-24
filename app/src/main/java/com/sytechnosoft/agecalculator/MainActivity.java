@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.Feedback) {
             try {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                String[] recipients = {"yadav.saurabh9517@gmail.com"};
+                String[] recipients = {"yadav.saurabh9517+feedbackAC@gmail.com"};
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback For Age Calculator App v"+BuildConfig.VERSION_NAME);
                 intent.putExtra(Intent.EXTRA_TEXT, "Feedback is....\n");
