@@ -1,5 +1,7 @@
 package com.sytechnosoft.agecalculator;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -16,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +27,15 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -47,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
     TextView textView_birth, textView_today, textView_year, textView_month, textView_day, textView_calculate, textView_clear, textView_extra_text, textView_extra_result;
     View layout_birth, layout_today;
     DatePickerDialog.OnDateSetListener dateSetListener1, dateSetListener2;
-    int years,months,days,total_months;
-    long total_week,total_days,total_hours,total_minutes,total_seconds;
+    int years, months, days, total_months;
+    long total_week, total_days, total_hours, total_minutes, total_seconds;
+    private com.google.android.gms.ads.AdView adView_home;
 
+    private InterstitialAd mInterstitialAd;
 
     //menu bar
     @Override
@@ -83,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 String[] recipients = {"yadav.saurabh9517+feedbackAC@gmail.com"};
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback For Age Calculator App v"+BuildConfig.VERSION_NAME);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback For Age Calculator App v" + BuildConfig.VERSION_NAME);
                 intent.putExtra(Intent.EXTRA_TEXT, "Feedback is....\n");
                 intent.setType("text/html");
                 intent.setPackage("com.google.android.gm");
@@ -173,7 +187,10 @@ public class MainActivity extends AppCompatActivity {
         textView_clear = findViewById(R.id.tv_clear);
         textView_extra_text = findViewById(R.id.tv_extra_txt);
         textView_extra_result = findViewById(R.id.tv_extra_result);
+        adView_home = findViewById(R.id.adView_home);
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView_home.loadAd(adRequest);
 
         Calendar calendar = Calendar.getInstance();
 
@@ -242,15 +259,15 @@ public class MainActivity extends AppCompatActivity {
                         org.joda.time.Period period_months = new Period(d_date, t_date, PeriodType.months());//total months
                         org.joda.time.Period period_week = new Period(d_date, t_date, PeriodType.weeks());//total weeks
                         org.joda.time.Period period_day = new Period(d_date, t_date, PeriodType.days());//total days
-                         years = period.getYears();
-                         months = period.getMonths();
-                         days = period.getDays();
-                         total_months = period_months.getMonths();
-                         total_week = period_week.getWeeks();
-                         total_days = period_day.getDays();
-                         total_hours = total_days * 24;
-                         total_minutes = total_hours * 60;
-                         total_seconds = total_minutes * 60;
+                        years = period.getYears();
+                        months = period.getMonths();
+                        days = period.getDays();
+                        total_months = period_months.getMonths();
+                        total_week = period_week.getWeeks();
+                        total_days = period_day.getDays();
+                        total_hours = total_days * 24;
+                        total_minutes = total_hours * 60;
+                        total_seconds = total_minutes * 60;
 
                         // show the final output
                         textView_year.setText(years + "");
@@ -311,10 +328,82 @@ public class MainActivity extends AppCompatActivity {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Awesome...\n Please install this App. https://play.google.com/store/apps/details?id=com.agecalculators");
-        sendIntent.putExtra(Intent.EXTRA_TEXT,"My Age is "+years+" Years "+months+" Months "+days+" Days \n\n Total Summery is \n"+"\nTotal Years: "+years+"\nTotal Months: "+total_months+"\nTotal Week: "+total_week+"\nTotal Days: "+total_days+"\nTotal Hours: "+total_hours +"\nTotal Minutes: "+total_minutes+"\nTotal Seconds: "+total_seconds+"\n\nYou can check your age from:- https://play.google.com/store/apps/details?id=com.agecalculators");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "My Age is " + years + " Years " + months + " Months " + days + " Days \n\n Total Summery is \n" + "\nTotal Years: " + years + "\nTotal Months: " + total_months + "\nTotal Week: " + total_week + "\nTotal Days: " + total_days + "\nTotal Hours: " + total_hours + "\nTotal Minutes: " + total_minutes + "\nTotal Seconds: " + total_seconds + "\n\nYou can check your age from:- https://play.google.com/store/apps/details?id=com.agecalculators");
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         startActivity(shareIntent);
 
+    }
+
+    @Override
+    protected void onStart() {
+
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+                            @Override
+                            public void onAdClicked() {
+                                // Called when a click is recorded for an ad.
+                                Log.d(TAG, "Ad was clicked.");
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Called when ad is dismissed.
+                                // Set the ad reference to null so you don't show the ad a second time.
+                                Log.d(TAG, "Ad dismissed fullscreen content.");
+                                mInterstitialAd = null;
+                                onBackPressed();
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Called when ad fails to show.
+                                Log.e(TAG, "Ad failed to show fullscreen content.");
+                                mInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdImpression() {
+                                // Called when an impression is recorded for an ad.
+                                Log.d(TAG, "Ad recorded an impression.");
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Called when ad is shown.
+                                Log.d(TAG, "Ad showed fullscreen content.");
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d(TAG, loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
+        super.onStart();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
