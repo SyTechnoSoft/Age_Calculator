@@ -300,6 +300,6 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:adUnitId="ca-app-pub-1306618085301032/7204516648"
         app:layout_constraintBottom_toBottomOf="parent" />
 </RelativeLayout>

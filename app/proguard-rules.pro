@@ -20,3 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn org.joda.convert.**
+
+-keep class com.google.ads.** # Don't proguard AdMob classes
+-dontwarn com.google.ads.** # Temporary workaround for v6.2.1. It gives a warning that you can ignore

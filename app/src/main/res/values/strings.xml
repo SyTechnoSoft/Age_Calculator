@@ -16,7 +16,7 @@
     <string name="month">Months</string>
     <string name="day">Days</string>
     <string name="choose_language">Choose Language</string>
-    <string name="interstitialAd">ca-app-pub-1306618085301032/9940939747</string>
+    <string name="back_interstitialAd">ca-app-pub-1306618085301032/9940939747</string>
     <string name="home_banned">"ca-app-pub-1306618085301032/7204516648"</string>
 
 </resources>
