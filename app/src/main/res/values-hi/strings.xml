@@ -16,4 +16,7 @@
     <string name="month">महीने</string>
     <string name="day">दिन</string>
     <string name="choose_language">भाषा चुनें</string>
+
+    <string name="interstitialAd">ca-app-pub-1306618085301032/9940939747</string>
+    <string name="home_banned">"ca-app-pub-1306618085301032/7204516648"</string>
 </resources>
